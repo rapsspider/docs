@@ -57,7 +57,7 @@ mieux organisé::
 
 Si vous avez besoin d'activer un helper pour tous les controllers, ajoutez
 son nom dans le tableau ``$helpers`` du fichier
-``/app/Controller/AppController.php`` (à créer si pas présent). N'oubliez pas
+``/src/Controller/AppController.php`` (à créer si pas présent). N'oubliez pas
 d'inclure les helpers par défaut Html et Form::
 
     class AppController extends Controller {
@@ -71,6 +71,7 @@ Vous pouvez passer des options de configuration dans les helpers. Ces options
 peuvent être utilisées pour définir les valeurs d'attributs ou modifier le
 comportement du helper::
 
+    // /src/View/Helper/AwesomeHelper.php
     class AwesomeHelper extends AppHelper {
         public function __construct(View $view, $config = []) {
             parent::__construct($view, $config);
@@ -78,6 +79,7 @@ comportement du helper::
         }
     }
 
+    // /src/Controller/AwesomeController.php
     class AwesomeController extends AppController {
         public $helpers = ['Awesome' => ['option1' => 'value1']];
     }
@@ -86,6 +88,7 @@ Par défaut, les options de configuration sont fusionnées avec la propriété
 ``$_defaultConfig``. Cette propriété doit définir les valeurs par défaut de
 toute configuration dont votre helper a besoin. Par exemple::
 
+    /* /src/View/Helper/AwesomeHelper.php */
     namespace App\View\Helper;
 
     use Cake\View\StringTemplateTrait;
@@ -137,7 +140,7 @@ permet de créer des alias de helpers dans vos vues. Cette fonctionnalité est
 utile quand vous voulez remplacer ``$this->Html`` ou une autre référence du
 Helper habituel avec une implémentation personnalisée::
 
-    // src/Controller/PostsController.php
+    // /src/Controller/PostsController.php
     class PostsController extends AppController {
         public $helpers = [
             'Html' => [
@@ -146,7 +149,7 @@ Helper habituel avec une implémentation personnalisée::
         ];
     }
 
-    // src/View/Helper/MyHtmlHelper.php
+    // /src/View/Helper/MyHtmlHelper.php
     use Cake\View\Helper\HtmlHelper;
 
     class MyHtmlHelper extends HtmlHelper {
